@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List | รายการสิ่งที่ต้องทำ</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="contact.html">
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --background-color: #f4f6f8;
+            --primary-color: #4a6cf7;
+            --secondary-color: #6a7cff;
+            --background-color: #f5f7fa;
             --text-color: #333;
             --done-color: #95a5a6;
             --easy-color: #2ecc71;
@@ -223,11 +224,105 @@
             transform: scale(1.2);
         }
 
-        @media (max-width: 768px) {
-            .task-lists {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 1200px) {
+    .container {
+        margin: 20px;
+        max-width: calc(100% - 40px);
+    }
+}
+
+@media (max-width: 992px) {
+    .input-area {
+        flex-direction: column;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .input-row input, 
+    .input-row select, 
+    .input-row button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .language-toggle {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .language-toggle button {
+        width: 100%;
+    }
+
+    .task-lists {
+        grid-template-columns: 1fr;
+    }
+
+    .task-column {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .input-row input, 
+    .input-row select, 
+    .input-row button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .task-item .tags {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .task-item button {
+        align-self: flex-end;
+    }
+}
+
+/* Additional global responsive adjustments */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
     </style>
 </head>
 <body>
@@ -237,6 +332,8 @@
             <div class="language-toggle">
                 <button id="lang-en" class="active">English</button>
                 <button id="lang-th">ภาษาไทย</button>
+                <a href="contact.html"><button >Contact</button></a>
+                
             </div>
         </div>
         <div class="content">
