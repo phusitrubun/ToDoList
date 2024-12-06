@@ -198,3 +198,4 @@
 
         // Load tasks and set initial language
         loadTasksFromLocalStorage();
+        
