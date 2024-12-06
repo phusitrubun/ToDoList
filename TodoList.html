@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List | รายการสิ่งที่ต้องทำ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --background-color: #f4f6f8;
+            --text-color: #333;
+            --done-color: #95a5a6;
+            --easy-color: #2ecc71;
+            --medium-color: #f39c12;
+            --hard-color: #e74c3c;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 40px auto;
+            background-color: var(--white);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .language-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-toggle button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .language-toggle button.active {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .input-area {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .input-area input, .input-area select {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-area input:focus, .input-area select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .input-area input[type="text"] {
+            flex-grow: 1;
+        }
+
+        .input-area select {
+            width: 150px;
+        }
+
+        .input-area button {
+            padding: 15px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .input-area button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .task-lists {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .task-column {
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .task-column h2 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--done-color);
+            padding-bottom: 10px;
+        }
+
+        .task-list {
+            list-style-type: none;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .task-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .task-item .tags {
+            display: flex;
+            gap: 5px;
+            margin-right: 10px;
+        }
+
+        .task-item .category-tag, 
+        .task-item .difficulty-tag {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .task-item .category-tag {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .difficulty-easy {
+            background-color: var(--easy-color);
+            color: white;
+        }
+
+        .difficulty-medium {
+            background-color: var(--medium-color);
+            color: white;
+        }
+
+        .difficulty-hard {
+            background-color: var(--hard-color);
+            color: white;
+        }
+
+        .task-item span.task-text {
+            flex-grow: 1;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .task-item.done .task-text {
+            text-decoration: line-through;
+            color: var(--done-color);
+        }
+
+        .task-item button {
+            background-color: transparent;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .task-item button:hover {
+            color: #ff4757;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .task-lists {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="page-title">Todo List</h1>
+            <div class="language-toggle">
+                <button id="lang-en" class="active">English</button>
+                <button id="lang-th">ภาษาไทย</button>
+            </div>
+        </div>
+        <div class="content">
+            <div class="input-area">
+                <div style="flex-grow: 1;">
+                    <div class="input-row">
+                        <input type="text" id="task-input" placeholder="Add new task">
+                        <input type="text" id="category-input" placeholder="Category">
+                        <select id="difficulty-input">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                        <button id="add-task">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="task-lists">
+                <div class="task-column">
+                    <h2 id="todo-title">To Do</h2>
+                    <ul id="todo-list" class="task-list"></ul>
+                </div>
+                <div class="task-column">
+                    <h2 id="in-progress-title">In Progress</h2>
+                    <ul id="in-progress-list" class="task-list"></ul>
+                </div>
+                <div class="task-column">
+                    <h2 id="done-title">Done</h2>
+                    <ul id="done-list" class="task-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multilingual Support
+        const translations = {
+            en: {
+                pageTitle: 'Todo List',
+                todoTitle: 'To Do',
+                inProgressTitle: 'In Progress',
+                doneTitle: 'Done',
+                taskPlaceholder: 'Add new task',
+                categoryPlaceholder: 'Category',
+                addButton: 'Add',
+                difficulties: {
+                    easy: 'Easy',
+                    medium: 'Medium',
+                    hard: 'Hard'
+                }
+            },
+            th: {
+                pageTitle: 'รายการสิ่งที่ต้องทำ',
+                todoTitle: 'งานที่ต้องทำ',
+                inProgressTitle: 'งานที่กำลังทำ',
+                doneTitle: 'งานที่ทำแล้ว',
+                taskPlaceholder: 'เพิ่มงานใหม่',
+                categoryPlaceholder: 'หมวดหมู่',
+                addButton: 'เพิ่ม',
+                difficulties: {
+                    easy: 'ง่าย',
+                    medium: 'ปานกลาง',
+                    hard: 'ยาก'
+                }
+            }
+        };
+
+        const elements = {
+            pageTitle: document.getElementById('page-title'),
+            todoTitle: document.getElementById('todo-title'),
+            inProgressTitle: document.getElementById('in-progress-title'),
+            doneTitle: document.getElementById('done-title'),
+            taskInput: document.getElementById('task-input'),
+            categoryInput: document.getElementById('category-input'),
+            addTaskButton: document.getElementById('add-task'),
+            difficultyInput: document.getElementById('difficulty-input'),
+            enLangButton: document.getElementById('lang-en'),
+            thLangButton: document.getElementById('lang-th')
+        };
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            
+            elements.pageTitle.textContent = t.pageTitle;
+            elements.todoTitle.textContent = t.todoTitle;
+            elements.inProgressTitle.textContent = t.inProgressTitle;
+            elements.doneTitle.textContent = t.doneTitle;
+            elements.taskInput.placeholder = t.taskPlaceholder;
+            elements.categoryInput.placeholder = t.categoryPlaceholder;
+            elements.addTaskButton.textContent = t.addButton;
+
+            // Update difficulty options
+            elements.difficultyInput.innerHTML = `
+                <option value="easy">${t.difficulties.easy}</option>
+                <option value="medium">${t.difficulties.medium}</option>
+                <option value="hard">${t.difficulties.hard}</option>
+            `;
+
+            // Update existing task difficulty tags
+            document.querySelectorAll('.difficulty-tag').forEach(tag => {
+                const difficulty = tag.closest('.task-item').dataset.difficulty;
+                tag.textContent = t.difficulties[difficulty];
+            });
+
+            // Set active language button
+            elements.enLangButton.classList.toggle('active', lang === 'en');
+            elements.thLangButton.classList.toggle('active', lang === 'th');
+
+            // Save language preference
+            localStorage.setItem('appLanguage', lang);
+        }
+
+        // Language Toggle Event Listeners
+        elements.enLangButton.addEventListener('click', () => changeLanguage('en'));
+        elements.thLangButton.addEventListener('click', () => changeLanguage('th'));
+
+        // Rest of the previous script remains the same...
+        const taskInput = document.getElementById('task-input');
+        const categoryInput = document.getElementById('category-input');
+        const difficultyInput = document.getElementById('difficulty-input');
+        const addTaskButton = document.getElementById('add-task');
+        const todoList = document.getElementById('todo-list');
+        const inProgressList = document.getElementById('in-progress-list');
+        const doneList = document.getElementById('done-list');
+
+        function saveTasksToLocalStorage() {
+            const tasks = {
+                todo: parseListTasks(todoList),
+                inProgress: parseListTasks(inProgressList),
+                done: parseListTasks(doneList)
+            };
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        function parseListTasks(list) {
+            return Array.from(list.children).map(task => ({
+                text: task.querySelector('.task-text').textContent,
+                category: task.querySelector('.category-tag')?.textContent || '',
+                difficulty: task.dataset.difficulty
+            }));
+        }
+
+        function loadTasksFromLocalStorage() {
+            const savedTasks = JSON.parse(localStorage.getItem('tasks') || '{"todo":[],"inProgress":[],"done":[]}');
+            const savedLanguage = localStorage.getItem('appLanguage') || 'en';
+            
+            changeLanguage(savedLanguage);
+            
+            savedTasks.todo.forEach(task => createTaskElement(task.text, todoList, task.category, task.difficulty));
+            savedTasks.inProgress.forEach(task => createTaskElement(task.text, inProgressList, task.category, task.difficulty));
+            savedTasks.done.forEach(task => createTaskElement(task.text, doneList, task.category, task.difficulty, true));
+        }
+
+        function createTaskElement(taskText, targetList, category, difficulty, isDone = false) {
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('task-item');
+            taskItem.dataset.difficulty = difficulty;
+            if (isDone) taskItem.classList.add('done');
+
+            const tagsContainer = document.createElement('div');
+            tagsContainer.classList.add('tags');
+
+            if (category) {
+                const categoryTag = document.createElement('span');
+                categoryTag.classList.add('category-tag');
+                categoryTag.textContent = category;
+                tagsContainer.appendChild(categoryTag);
+            }
+
+            const difficultyTag = document.createElement('span');
+            difficultyTag.classList.add('difficulty-tag', `difficulty-${difficulty}`);
+            difficultyTag.textContent = translations[localStorage.getItem('appLanguage') || 'en'].difficulties[difficulty];
+            tagsContainer.appendChild(difficultyTag);
+
+            const taskSpan = document.createElement('span');
+            taskSpan.classList.add('task-text');
+            taskSpan.textContent = taskText;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '✖';
+
+            deleteButton.addEventListener('click', () => {
+                targetList.removeChild(taskItem);
+                saveTasksToLocalStorage();
+            });
+
+            // [Previous code remains the same, I'll add the missing script code from the previous point]
+
+            taskSpan.addEventListener('click', () => {
+                if (targetList === todoList) {
+                    todoList.removeChild(taskItem);
+                    createTaskElement(taskText, inProgressList, category, difficulty);
+                } else if (targetList === inProgressList) {
+                    inProgressList.removeChild(taskItem);
+                    createTaskElement(taskText, doneList, category, difficulty, true);
+                } else {
+                    doneList.removeChild(taskItem);
+                    createTaskElement(taskText, todoList, category, difficulty, false);
+                }
+                saveTasksToLocalStorage();
+            });
+
+            taskItem.appendChild(tagsContainer);
+            taskItem.appendChild(taskSpan);
+            taskItem.appendChild(deleteButton);
+            targetList.appendChild(taskItem);
+            saveTasksToLocalStorage();
+        }
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            const category = categoryInput.value.trim();
+            const difficulty = difficultyInput.value;
+
+            if (taskText) {
+                createTaskElement(taskText, todoList, category, difficulty);
+                taskInput.value = '';
+                categoryInput.value = '';
+                difficultyInput.value = 'easy';
+            }
+        }
+
+        // Allow adding task with Enter key
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+        categoryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        addTaskButton.addEventListener('click', addTask);
+
+        // Load tasks and set initial language
+        loadTasksFromLocalStorage();
+    </script>
+</body>
+</html>
