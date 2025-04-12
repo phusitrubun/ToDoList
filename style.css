@@ -1,0 +1,328 @@
+:root {
+    --primary-color: #4a6cf7;
+    --secondary-color: #6a7cff;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --done-color: #95a5a6;
+    --easy-color: #2ecc71;
+    --medium-color: #f39c12;
+    --hard-color: #e74c3c;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: var(--white);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.language-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+.language-toggle button {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.language-toggle button.active {
+    background: white;
+    color: var(--primary-color);
+}
+
+.content {
+    padding: 20px;
+}
+
+.input-area {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.input-area input, .input-area select {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.input-area input:focus, .input-area select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.input-area input[type="text"] {
+    flex-grow: 1;
+}
+
+.input-area select {
+    width: 150px;
+}
+
+.input-area button {
+    padding: 15px 25px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.input-area button:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.task-lists {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.task-column {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-column h2 {
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--done-color);
+    padding-bottom: 10px;
+}
+
+.task-list {
+    list-style-type: none;
+    max-height: 500px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.task-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.task-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.task-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+}
+
+.task-item .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.task-item .category-tag, 
+.task-item .difficulty-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.task-item .category-tag {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.difficulty-easy {
+    background-color: var(--easy-color);
+    color: white;
+}
+
+.difficulty-medium {
+    background-color: var(--medium-color);
+    color: white;
+}
+
+.difficulty-hard {
+    background-color: var(--hard-color);
+    color: white;
+}
+
+.task-item span.task-text {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    flex-grow: 1;
+    max-width: 100%;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+.task-item.done .task-text {
+    text-decoration: line-through;
+    color: var(--done-color);
+}
+
+.task-item button {
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.task-item button:hover {
+    color: #ff4757;
+    transform: scale(1.2);
+}
+
+@media (max-width: 1200px) {
+    .container {
+        margin: 20px;
+        max-width: calc(100% - 40px);
+    }
+}
+
+@media (max-width: 992px) {
+    .task-lists {
+        grid-template-columns: 1fr;
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .input-row input, 
+    .input-row select, 
+    .input-row button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .language-toggle {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .language-toggle button {
+        width: 100%;
+    }
+
+    .task-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .task-item-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .task-item .tags {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    html, body {
+        overflow-x: hidden;
+    }
+
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    .container {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .input-row input, 
+    .input-row select, 
+    .input-row button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

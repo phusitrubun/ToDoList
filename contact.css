@@ -1,0 +1,138 @@
+:root {
+    --primary-color: #4a6cf7;
+    --secondary-color: #6a7cff;
+    --background-color: #f5f7fa;
+    --text-color: #17171c;
+    --white: #ffffff;
+    --soft-shadow: 0 10px 40px rgba(48, 58, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--background-color), #e9eef5);
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--white);
+    box-shadow: var(--soft-shadow);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 50px rgba(48, 58, 255, 0.15);
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.content {
+    padding: 40px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-card {
+    text-align: center;
+    width: 100%;
+}
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--white);
+    box-shadow: 0 10px 30px rgba(48, 58, 255, 0.2);
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.contact-info h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.contact-info p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 28px;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.social-links a:hover {
+    color: var(--secondary-color);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.back-link {
+    margin-top: 30px;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--secondary-color);
+}
+
+.back-link i {
+    font-size: 20px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 20px;
+        width: calc(100% - 40px);
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+}
